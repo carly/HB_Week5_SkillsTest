@@ -15,13 +15,25 @@ db = SQLAlchemy()
 class Model(db.Model):
 
     __tablename__ = "models"
-    pass
+    
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    year = db.Column(db.Integer, nullable=False)
+    brand_name = db.Column(db.String(50), db.ForeignKey('brands.name'), nullable=True)
+    name = db.Column(db.String(50), nullable=False)
+
+    brand = db.relationship("Brand",
+                            backref=db.backref("models", order_by=id))
 
 
 class Brand(db.Model):
 
     __tablename__ = "brands"
-    pass
+    
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    founded = db.Column(db.Integer, nullable=False)
+    headquarters = db.Column(db.String(50), nullable=False)
+    discontinued = db.Column(db.Integer, nullable=True)
 
 # End Part 1
 ##############################################################################
